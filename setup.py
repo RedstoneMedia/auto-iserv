@@ -14,7 +14,7 @@ setup(
     description="A Library that can be used to create tools to automate Iserv without an API key",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/RedstoneMedia/py_swagger_generator",
+    url="https://github.com/RedstoneMedia/auto-iserv",
     author="RedstoneMedia",
     keywords="Iserv automation library auto",
     license="GNU General Public License v3.0",
