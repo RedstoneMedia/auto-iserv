@@ -7,6 +7,9 @@ This can be done by typing : `gen-iserv-credential`
 
 There are pre written Modules, but you can also create your own module automation.
 
+# Example
+If you want an example you might want to look at [this](https://github.com/RedstoneMedia/IServ-exercise-discord-bot)
+
 ## Installation
 Install this package using pip :
 `pip install auto-iserv`
