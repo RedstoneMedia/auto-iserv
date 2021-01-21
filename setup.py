@@ -22,7 +22,7 @@ setup(
     install_requires=["PyYAML>=5.3.1", "selenium>=3.141.0", "requests>=2.23.0", "urllib3>=1.25.8", "pycryptodomex>=3.9.8"],
     entry_points={
         "console_scripts": [
-            "gen-iserv-credential=autIservCredGen.__main__:main",
+            "gen-iserv-credential=autoIservCredGen.__main__:main",
         ]
     },
 )
