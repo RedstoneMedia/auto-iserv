@@ -1,5 +1,5 @@
-from autoIserv import Session, Exercise
-from autoIserv.Module import Module
+from .. import Session, Exercise
+from ..Module import Module
 
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC

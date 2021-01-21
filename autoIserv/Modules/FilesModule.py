@@ -1,5 +1,5 @@
-from autoIserv import Session, util
-from autoIserv.Module import Module
+from .. import Session, util
+from ..Module import Module
 
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
