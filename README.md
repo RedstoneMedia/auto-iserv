@@ -7,6 +7,11 @@ This can be done by typing : `gen-iserv-credential`
 
 There are pre written Modules, but you can also create your own module automation.
 
+
+# Contributing
+You can make pull requests and I will be happy to look at them.
+If you don't know what to contribute you could add more pre written modules.
+
 # Example
 If you want an example you might want to look at [this](https://github.com/RedstoneMedia/IServ-exercise-discord-bot)
 
