@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.firefox.webelement import FirefoxWebElement
 from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from urllib.parse import urljoin
 import os
 import json
@@ -98,10 +98,12 @@ class Exercise:
                 continue
             elif i == 3:
                 self.description = information_element.text
-            elif i == 4 and download_attachments:
-                attachment_elements = information_element.find_elements_by_tag_name("li")
-                for attachment_element in attachment_elements:
-                    link_element = attachment_element.find_element_by_tag_name("a")
+        if download_attachments:
+            try:
+                attachment_table_body = WebDriverWait(site_row, 1).until(EC.presence_of_element_located((By.XPATH, "div[1]/div/table[2]/tbody")))
+                attachment_rows = attachment_table_body.find_elements_by_tag_name("tr")
+                for attachment_row in attachment_rows:
+                    link_element = attachment_row.find_element_by_tag_name("a")
 
                     download_url = urljoin(self.real_base_url, link_element.get_attribute('href'))
                     print(f"[*] Downloading Attachment : {download_url}")
@@ -109,9 +111,11 @@ class Exercise:
                     if result:
                         print(f"[*] '{result[0]}' was downloaded")
                         self.attachments[result[0]] = {
-                            "content" : result[1],
-                            "description" : attachment_element.text
+                            "content": result[1],
+                            "description": link_element.text
                         }
+            except TimeoutException: # No attachments for that exercises exist
+                pass
         self.figure_out_subject()
 
 
