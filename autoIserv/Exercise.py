@@ -21,6 +21,9 @@ class Exercise:
         "Biology" : ["Biologie", "Bio"],
         "Physics": ["Physik"],
         "Chemistry": ["Chemie"],
+        "Music" : ["Musik"],
+        "Art" : ["Kunst"],
+        "Computer Science" : ["Informatik"],
         "History": ["Geschichte", "Geschichtsaufgabe"],
         "Politics" : ["Politik", "Gesetze"],
         "English": ["Englisch", "English", "Unit"],
@@ -40,6 +43,7 @@ class Exercise:
         self.due_date = None
         self.subject = None
         self.view_url = None
+        self.tags = None
 
         # Advanced Data
         self.description = None
@@ -69,10 +73,17 @@ class Exercise:
                 span_element = column.find_element_by_tag_name("span")
                 due_date_data_string = span_element.get_attribute("data-date").split("+")[0]
                 self.due_date = datetime.strptime(due_date_data_string, "%Y-%m-%dT%H:%M:%S")
+            elif i == 3:
+                tags_text = column.text
+                if tags_text != "(keine)":
+                    self.tags = str(column.text)
+                    self.figure_out_subject_based_on_tags()
         return True
 
 
     def figure_out_subject(self):
+        if self.subject != "not_found" and self.subject != None:
+            return
         search_string = (str(self.title) + str(self.description)).lower()
         for subject in self.SUBJECT_KEYWORDS:
             for key_word in self.SUBJECT_KEYWORDS[subject]:
@@ -82,22 +93,31 @@ class Exercise:
         self.subject = "not_found"
 
 
+    def figure_out_subject_based_on_tags(self):
+        if self.tags:
+            for subject in self.SUBJECT_KEYWORDS:
+                for key_word in self.SUBJECT_KEYWORDS[subject]:
+                    if key_word.lower() in self.tags.lower():
+                        self.subject = subject
+                        return
+        self.subject = "not_found"
+
+
     def view(self, download_attachments=True):
         self.driver.get(self.view_url)
         print(f"[*] Viewing Exercise : '{self.title}'")
         site_content = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "page-content")))
         site_row = site_content.find_element_by_class_name("row")
         information_table = WebDriverWait(site_row, 3).until(EC.presence_of_element_located((By.XPATH, "div[1]/div/table/tbody")))
-        information_elements = information_table.find_elements_by_tag_name("td")
-        for i, information_element in enumerate(information_elements):
-            if i == 0:
-                self.by = information_element.text
-            elif i == 1:
-                continue
-            elif i == 2:
-                continue
-            elif i == 3:
-                self.description = information_element.text
+        information_rows = information_table.find_elements_by_tag_name("tr")
+
+        for row in information_rows:
+            header = row.find_element_by_tag_name("th").text
+            data = row.find_element_by_tag_name("td")
+            if "Erstellt von" in header:
+                self.by = data.text
+            elif "Beschreibung" in header:
+                self.description = data.text
         if download_attachments:
             try:
                 attachment_table_body = WebDriverWait(site_row, 1).until(EC.presence_of_element_located((By.XPATH, "div[1]/div/table[2]/tbody")))
@@ -124,6 +144,7 @@ class Exercise:
             "Title": self.title,
             "Description": self.description,
             "By": self.by,
+            "Tags" : self.tags,
             "ViewUrl" : self.view_url,
             "StartDate": self.start_date.strftime("%d.%m.%Y %H_%M_%S"),
             "DueDate": self.due_date.strftime("%d.%m.%Y %H_%M_%S"),
@@ -163,6 +184,7 @@ class Exercise:
         new_exercise.description = data["Description"]
         new_exercise.view_url = data["ViewUrl"]
         new_exercise.by = data["By"]
+        new_exercise.tags = data["Tags"]
         new_exercise.start_date = datetime.strptime(data["StartDate"], "%d.%m.%Y %H_%M_%S")
         new_exercise.due_date = datetime.strptime(data["DueDate"], "%d.%m.%Y %H_%M_%S")
         new_exercise.new = data["New"]
