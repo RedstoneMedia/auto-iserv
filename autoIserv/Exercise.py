@@ -112,12 +112,15 @@ class Exercise:
         information_rows = information_table.find_elements_by_tag_name("tr")
 
         for row in information_rows:
-            header = row.find_element_by_tag_name("th").text
-            data = row.find_element_by_tag_name("td")
-            if "Erstellt von" in header:
-                self.by = data.text
-            elif "Beschreibung" in header:
-                self.description = data.text
+            try:
+                header = row.find_element_by_tag_name("th").text
+                data = row.find_element_by_tag_name("td")
+                if "Erstellt von" in header:
+                    self.by = data.text
+                elif "Beschreibung" in header:
+                    self.description = data.text
+            except NoSuchElementException:
+                pass
         if download_attachments:
             try:
                 attachment_table_body = WebDriverWait(site_row, 1).until(EC.presence_of_element_located((By.XPATH, "div[1]/div/table[2]/tbody")))
