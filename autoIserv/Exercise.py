@@ -184,7 +184,8 @@ class Exercise:
         new_exercise.description = data["Description"]
         new_exercise.view_url = data["ViewUrl"]
         new_exercise.by = data["By"]
-        new_exercise.tags = data["Tags"]
+        if "Tags" in data:
+            new_exercise.tags = data["Tags"]
         new_exercise.start_date = datetime.strptime(data["StartDate"], "%d.%m.%Y %H_%M_%S")
         new_exercise.due_date = datetime.strptime(data["DueDate"], "%d.%m.%Y %H_%M_%S")
         new_exercise.new = data["New"]
