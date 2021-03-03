@@ -8,7 +8,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="auto-iserv",
-    version="0.1.6",
+    version="0.1.7",
     description="A Library that can be used to create tools to automate Iserv without an API key",
     long_description=README,
     long_description_content_type="text/markdown",

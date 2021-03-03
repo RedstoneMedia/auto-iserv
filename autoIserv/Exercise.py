@@ -117,10 +117,16 @@ class Exercise:
                 data = row.find_element_by_tag_name("td")
                 if "Erstellt von" in header:
                     self.by = data.text
-                elif "Beschreibung" in header:
+                elif "Beschreibung" in header:  # Description is not in this table anymore but you can never be sure enough.
                     self.description = data.text
             except NoSuchElementException:
                 pass
+
+        if self.description == None:
+            # Get description text from div below information table
+            description_div = WebDriverWait(site_row, 3).until(EC.presence_of_element_located((By.XPATH, "div[1]/div/div[2]/div[2]")))
+            self.description = description_div.text
+
         if download_attachments:
             try:
                 attachment_table_body = WebDriverWait(site_row, 1).until(EC.presence_of_element_located((By.XPATH, "div[1]/div/table[2]/tbody")))
