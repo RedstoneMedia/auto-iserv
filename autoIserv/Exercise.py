@@ -129,7 +129,7 @@ class Exercise:
 
         if download_attachments:
             try:
-                attachment_table_body = WebDriverWait(site_row, 1).until(EC.presence_of_element_located((By.XPATH, "div[1]/div/table[2]/tbody")))
+                attachment_table_body = WebDriverWait(site_row, 1).until(EC.presence_of_element_located((By.XPATH, "div[1]/div/form/table/tbody")))
                 attachment_rows = attachment_table_body.find_elements_by_tag_name("tr")
                 for attachment_row in attachment_rows:
                     link_element = attachment_row.find_element_by_tag_name("a")
