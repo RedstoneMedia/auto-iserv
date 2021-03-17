@@ -198,6 +198,7 @@ class Exercise:
         new_exercise.start_date = datetime.strptime(data["StartDate"], "%d.%m.%Y %H_%M_%S")
         new_exercise.due_date = datetime.strptime(data["DueDate"], "%d.%m.%Y %H_%M_%S")
         new_exercise.new = data["New"]
+        new_exercise.figure_out_subject_based_on_tags()
         new_exercise.figure_out_subject()
 
         try:
