@@ -172,14 +172,14 @@ class Exercise:
                 })
                 if attachment_dir:
                     if os.path.isdir(attachment_dir):
-                        file_path = f"{attachment_dir}\\{attachment_name}"
+                        file_path = f"{attachment_dir}/{attachment_name}"
                         print(f"[*] Saving Attachment to {file_path}")
                         file = open(file_path, mode="wb")
                         file.write(attachment_content)
                         file.close()
 
 
-        exercise_path = f"{exercises_dir}\\" + f"{self.title}-{self.start_date}-{self.due_date}{self.by}.json".replace(":", "").replace("\\", "").replace("/", "").replace("?", "").replace("*", "").replace("<", "").replace(">","").replace('"', "").replace("|", "")
+        exercise_path = f"{exercises_dir}/" + f"{self.title}-{self.start_date}-{self.due_date}{self.by}.json".replace(":", "").replace("\\", "").replace("/", "").replace("?", "").replace("*", "").replace("<", "").replace(">","").replace('"', "").replace("|", "")
         print(f"[*] Saving Exercise to : {exercise_path}")
         with open(exercise_path, 'w', encoding="utf-8") as file:
             json.dump(data, file)

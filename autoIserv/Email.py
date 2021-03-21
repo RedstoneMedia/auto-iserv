@@ -152,20 +152,20 @@ class Email:
                     data["Attachments"][attachment_name]= str(base64.b64encode(attachment_content), encoding="utf-8")
                 if attachment_dir:
                     if path.isdir(attachment_dir):
-                        file_path = f"{attachment_dir}\\{attachment_name}"
+                        file_path = f"{attachment_dir}/{attachment_name}"
                         print(f"[*] Saving Attachment to {file_path}")
                         file = open(file_path, mode="wb")
                         file.write(attachment_content)
                         file.close()
 
-        email_path = f"{email_dir}\\" + f"{self.subject}-{self.date}-{self.size}{self.size_unit}_{self.index}.email-json".replace(":", "").replace("\\", "").replace("/", "").replace("?", "").replace("*", "").replace("<", "").replace(">", "").replace('"', "").replace("|", "")
+        email_path = f"{email_dir}/" + f"{self.subject}-{self.date}-{self.size}{self.size_unit}_{self.index}.email-json".replace(":", "").replace("\\", "").replace("/", "").replace("?", "").replace("*", "").replace("<", "").replace(">", "").replace('"', "").replace("|", "")
         print(f"[*] Saving email to : {email_path}")
         with open(email_path, 'w', encoding="utf-8") as file:
             json.dump(data, file)
 
 
     def save_attachment_to_file(self, attachment, attachment_dir):
-        file_path = f"{attachment_dir}\\{attachment_dir}"
+        file_path = f"{attachment_dir}/{attachment_dir}"
         file = open(file_path, mode="wb")
         file.write(self.attachments[attachment])
         file.close()
