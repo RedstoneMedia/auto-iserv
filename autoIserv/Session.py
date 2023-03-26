@@ -36,7 +36,7 @@ class Session:
         login_button.click()
 
         try:
-            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//li[@class='sidebar-profile']")))
+            WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@class='sidebar sidebar-profile']")))
         except TimeoutException:
             raise ValueError("Wrong credentials")
 

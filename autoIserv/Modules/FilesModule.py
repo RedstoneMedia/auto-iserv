@@ -77,7 +77,7 @@ class File:
                 file.id = col.find_element_by_tag_name("input").get_attribute("value")
             elif data_type == "name":
                 file.name = col.text
-                file.remote_location = col.find_element_by_tag_name("a").get_attribute("href")
+                file.remote_location = col.find_element_by_tag_name("a").get_attribute("href").replace("?show=true", "")
             elif data_type == "size":
                 try:
                     calc_size_button = col.find_element_by_tag_name("button")
